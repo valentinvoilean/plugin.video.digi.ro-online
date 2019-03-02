@@ -1,9 +1,14 @@
 Digi.ro-Online
 ========================
 
-Kodi addon for accessing live TV programmes of digi-online.ro & digi24.ro
+Kodi addon for accessing live TV programmes available on www.digionline.ro
+
+
+---- Note ----
+========================
 
 Digi.ro-Online (plugin.video.digi.ro-online) Kodi plugin replaces plugin.video.digi-online (https://github.com/dexterke/plugin.video.digi-online) as of 1st March, 2019.
+
 
 
  ---- Disclaimer ----
