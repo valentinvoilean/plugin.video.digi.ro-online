@@ -11,7 +11,7 @@
     <setting type="sep"/>
   </category>
   <category label="Debug Options">
-    <setting label="Log File: plugin_video_digionline.ro.log" type="lsep"/>
+    <setting label="Log File: plugin_video_digionline.ro.log type="lsep"/> 
     <setting label="Enable debug" id="debug_Enabled" type="bool" default="false" />
     <setting type="sep"/>
   </category>
