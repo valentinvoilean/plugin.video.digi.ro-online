@@ -1,3 +1,6 @@
+v 1.1.0
+- Added 'Now playing Title' - 'Now playing Info' popup notification when loading channels.
+
 v 1.0.0
 - www.digionline.ro changed comletely, new website uses now TLS/SSL encryption;
   Present plugin had to be rewritten from scratch, moved to using python requests.

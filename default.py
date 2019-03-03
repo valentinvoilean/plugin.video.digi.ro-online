@@ -181,7 +181,7 @@ def getParams():
 ## Load HTML, extract playlist URL & 'now playing' info
 def processHTML(url):
     global result
-    #global nowPlayingInfo
+    global nowPlayingInfo
     global deviceId
     global session
     global theader
@@ -195,8 +195,8 @@ def processHTML(url):
     html_text = None
     sp_code = 404
     json_data = None
-    f = HTMLParser.HTMLParser()
-    url = f.unescape(url)
+    html_parser = HTMLParser.HTMLParser()
+    url = html_parser.unescape(url)
     write2file(log_File, "processHTML received URL: " + url + '\n', 'a', 1, 0)
     section = str(re.compile('.ro/(.+?)/').findall(url)[0])
 
@@ -273,7 +273,7 @@ def processHTML(url):
 	  write2file(html_f_2, req.content, 'w', 0, 0)
 
 	  if re.compile('<div class="form-error mb-10 color-red" style="font-size:18px; font-family: modena-bold;">').findall(req.content):
-	    errMSG = str((re.compile('<div class="form-error mb-10 color-red" style="font-size:18px; font-family: modena-bold;">\n\s+(.+?)&period;\s+<\/div>').findall(req.content))[0])
+	    errMSG = html_parser.unescape(str((re.compile('<div class="form-error mb-10 color-red" style="font-size:18px; font-family: modena-bold;">\n\s+(.+?)&period;\s+<\/div>').findall(req.content))[0])).replace("&period;", ".")
 	    write2file(log_File, 'processHTML Login Error: ' + errMSG, 'a', 0, 1)
 	    xbmcgui.Dialog().ok('Error', errMSG)
 	    sp_code = 401
@@ -307,7 +307,7 @@ def processHTML(url):
 	      #post_data={'form-login-mode': 'mode-all'}
 	      #req = session.post(login_Ks, headers=headers, data=post_data, verify=False)
 	      #log_http_session(req, headers, 'POST', post_data, 0)
-	      #write2file(html_f_4, req.content, 'w', 0, 0)
+	      #write2file(html_f_3, req.content, 'w', 0, 0)
 
 	  #except Exception as err:
 	    #write2file(log_File, 'processHTML ERROR: Could not perfom login: ' + str(err), 'a', 0, 1)
@@ -350,7 +350,7 @@ def processHTML(url):
 		req = session.get(url, headers=headers, verify=False)
 		html_text = req.content
 		log_http_session(req, headers, 'GET', '', 0)
-		write2file(html_f_5, req.content, 'w', 0, 0)
+		write2file(html_f_4, req.content, 'w', 0, 0)
 		if req.status_code != 200:
 		    write2file(log_File, 'processHTML ERROR: Could not fetch ' + str(url) + ', HTTP Code ' + str(req.status_code), 'a', 0, 1)
 		    xbmcgui.Dialog().ok('Error', 'Could not fetch ' + str(url) + "\nHTTP code " + str(req.status_code))
@@ -358,13 +358,15 @@ def processHTML(url):
 		write2file(log_File, 'processHTML ERROR: Could not fetch ' + str(url), 'a', 0, 1)
 		xbmcgui.Dialog().ok('Error', 'Could not fetch ' + str(url))
 
-	    #try:
-		### Extract 'now-playing'
-		#nowPlayingInfo = " - "
-		#if osdInfo_Enabled == "true":
-		  #nowPlayingInfo = str((re.compile('<h2 class="section-title-alt" id="title">(.+?)<\/h2>').findall(html_text))[0])
-	    #except:
-		  #write2file(log_File, 'processHTML ERROR: could not detect nowPlayingInfo', 'a', 0, 1)
+	    try:
+		## Extract 'now-playing'
+		nowPlayingInfo = " - "
+		if osdInfo_Enabled == "true":
+		  txt = str((re.compile('<h2 class="section-title-alt" id="title">(.+?)<\/h2>').findall(html_text))[0])
+		  write2file(log_File, 'processHTML nowPlaying txt: ' + txt, 'a', 1, 0)
+		  nowPlayingInfo = html_parser.unescape(txt).replace("&period;", ".").replace("&colon;", ":").replace("&amp;", "&").replace("&commat;", "@")
+	    except Exception as err:
+		  write2file(log_File, 'processHTML ERROR: could not detect nowPlayingInfo: ' + str(err), 'a', 0, 1)
 	    ##
 	    if req.status_code == 200 and html_text is not None:
 	      streamId = None
@@ -373,7 +375,7 @@ def processHTML(url):
 	      streamId = str((re.compile('"streamId":(.+?),').findall(html_text))[0])
 	      #balancerKey = str((re.compile('"balancerKey":"(.+?)"').findall(html_text))[0])
 	      #abr = str((re.compile('"abr":(.+?),').findall(html_text))[0])
-	      #write2file(log_File, 'processHTML nowPlayingTitle: ' + nowPlayingInfo, 'a', 1, 0)
+	      write2file(log_File, 'processHTML nowPlayingTitle: ' + nowPlayingInfo, 'a', 0, 0)
 	      #write2file(log_File, 'processHTML balancerKey: ' + balancerKey, 'a', 0, 0)
 	      write2file(log_File, 'processHTML streamId: ' + streamId, 'a', 0, 0)
 	      write2file(log_File, 'processHTML section: ' + section, 'a', 0, 0)
@@ -480,8 +482,7 @@ def parseInput(url):
       xbmc.Player().play(link, item)
       write2file(log_File, "xbmc.Player().play(" + link + "," + str(item) + ")", 'a', 0, 1)
       if osdInfo_Enabled == "true":
-	#xbmc.executebuiltin("Notification(" + nowPlayingTitle + ", " + nowPlayingInfo + ")")
-	xbmc.executebuiltin("Notification(" + nowPlayingTitle + ")")
+	xbmc.executebuiltin("Notification(" + nowPlayingTitle + ", " + nowPlayingInfo + ")")
 
 
 ####################################################
