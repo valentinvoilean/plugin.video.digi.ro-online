@@ -100,10 +100,10 @@ def ROOT():
     addDir('Bollywood TV', 'https://www.digionline.ro/filme/bollywood-tv', setIcon('BollywoodTV.png'))
 
     ## DRM
-    #addDir('FilmNow', 'https://www.digionline.ro/filme/filmnow', setIcon('filmnow.png'))
-    #addDir('HBO Ro', 'https://www.digionline.ro/filme/hbo', setIcon('HBO.png'))
-    #addDir('HBO 2', 'https://www.digionline.ro/filme/hbo2', setIcon('HBO2.png'))
-    #addDir('HBO 3', 'https://www.digionline.ro/filme/hbo3', setIcon('HBO3.png'))
+    addDir('FilmNow', 'https://www.digionline.ro/filme/filmnow', setIcon('filmnow.png'))
+    addDir('HBO Ro', 'https://www.digionline.ro/filme/hbo', setIcon('HBO.png'))
+    addDir('HBO 2', 'https://www.digionline.ro/filme/hbo2', setIcon('HBO2.png'))
+    addDir('HBO 3', 'https://www.digionline.ro/filme/hbo3', setIcon('HBO3.png'))
 
     addDir('UTV', 'https://www.digionline.ro/muzica/u-tv', setIcon('UTV.png'))
     addDir('Music Channel', 'https://www.digionline.ro/muzica/music-channel', setIcon('MusicChannel.png'))
@@ -134,7 +134,7 @@ def ROOT():
     ## dkakat
     #addDir('Digi24 Timisoara', 'https://www.digionline.ro/local/digi24-timisoara', setIcon('Digi24.png'))
     #addDir('Digi24 Oradea', 'https://www.digionline.ro/local/digi24-oradea', setIcon('Digi24.png'))
-    #addDir('Digi24 Brasov', 'https://www.digionline.ro/local/digi24-brasov', setIcon('Digi24.png'))
+    addDir('Digi24 Brasov', 'https://www.digionline.ro/local/digi24-brasov', setIcon('Digi24.png'))
     #addDir('Digi24 Craiova', 'https://www.digionline.ro/local/digi24-craiova', setIcon('Digi24.png'))
     #addDir('Digi24 Constanta', 'https://www.digionline.ro/local/digi24-constanta', setIcon('Digi24.png'))
     #addDir('Digi24 Iasi', 'https://www.digionline.ro/local/digi24-iasi', setIcon('Digi24.png'))
